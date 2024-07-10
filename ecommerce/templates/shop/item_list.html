@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Items</title>
+</head>
+
+<body>
+    <h1>Items</h1>
+    <form method="get">
+        <input type="text" name="q" placeholder="Search...">
+        <button type="submit">Search</button>
+    </form>
+    <ul>
+        {% for item in items %}
+        <li>
+            <a href="{% url 'item_detail' item.pk %}">{{ item.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'cart_detail' %}">Cart</a>
+</body>
+
+</html>

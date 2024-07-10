@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cart</title>
+</head>
+
+<body>
+    <h1>Your Cart</h1>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.name }} - Quantity: {{ request.session.cart.item.id }}</li>
+        {% endfor %}
+    </ul>
+    <p>Total Amount: {{ total_amount }}</p>
+    <a href="{% url 'checkout' %}">Checkout</a>
+</body>
+
+</html>

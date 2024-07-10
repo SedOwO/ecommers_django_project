@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ item.name }}</title>
+</head>
+
+<body>
+    <h1>{{ item.name }}</h1>
+    <img src="{{ item.image.url }}" alt="{{ item.name }}">
+    <p>{{ item.description }}</p>
+    <form method="post" action="{% url 'add_to_cart' item.pk %}">
+        {% csrf_token %}
+        <button type="submit">Add to Cart</button>
+    </form>
+    <a href="{% url 'cart_detail' %}">Cart</a>
+</body>
+
+</html>
