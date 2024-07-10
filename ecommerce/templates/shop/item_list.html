@@ -1,111 +1,158 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Items</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
-        color: #333;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
 
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
-      }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-      h1 {
-        text-align: center;
-        color: #6c757d;
-      }
+        h1 {
+            text-align: center;
+            color: #6c757d;
+        }
 
-      form {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-      }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-      input[type="text"] {
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 5px;
-        width: 300px;
-      }
+        form {
+            display: flex;
+            margin-right: 10px;
+        }
 
-      button {
-        padding: 10px 20px;
-        border: none;
-        background-color: #6c757d;
-        color: white;
-        border-radius: 5px;
-        margin-left: 10px;
-        cursor: pointer;
-      }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            width: 300px;
+        }
 
-      button:hover {
-        background-color: #5a6268;
-      }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 5px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
-      }
+        button:hover {
+            background-color: #5a6268;
+        }
 
-      .item {
-        background-color: #ffffff;
-        border: 1px solid #ced4da;
-        border-radius: 10px;
-        padding: 20px;
-        text-align: center;
-        transition: box-shadow 0.3s ease;
-      }
+        .checkout-link {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-left: 10px;
+            cursor: pointer;
+        }
 
-      .item:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      }
+        .checkout-link:hover {
+            background-color: #5a6268;
+        }
 
-      .item a {
-        color: #6c757d;
-        text-decoration: none;
-        font-size: 18px;
-      }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
 
-      .item a:hover {
-        color: #5a6268;
-      }
+        .item {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: box-shadow 0.3s ease;
+        }
 
-      .cart-link {
-        display: block;
-        text-align: center;
-        margin-top: 20px;
-        color: #6c757d;
-        text-decoration: none;
-        font-size: 18px;
-      }
+        .item:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-      .cart-link:hover {
-        color: #5a6268;
-      }
+        .item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .item a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .item a:hover {
+            color: #5a6268;
+        }
+
+        .item .price {
+            color: #28a745;
+            font-size: 16px;
+        }
+
+        .item form {
+            margin-top: 10px;
+        }
+
+        .item button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .item button:hover {
+            background-color: #218838;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container">
-      <h1>Items</h1>
-      <form method="get">
-        <input type="text" name="q" placeholder="Search..." />
-        <button type="submit">Search</button>
-      </form>
-      <div class="grid">
-        {% for item in items %}
-        <div class="item">
-          <a href="{% url 'item_detail' item.pk %}">{{ item.name }}</a>
+        <h1>Items</h1>
+        <div class="search-container">
+            <form method="get">
+                <input type="text" name="q" placeholder="Search..." />
+                <button type="submit">Search</button>
+            </form>
+            <a class="checkout-link" href="{% url 'cart_detail' %}">Checkout</a>
         </div>
-        {% endfor %}
-      </div>
-      <a class="cart-link" href="{% url 'cart_detail' %}">Cart</a>
+        <div class="grid">
+            {% for item in items %}
+            <div class="item">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}">
+                <a href="{% url 'item_detail' item.pk %}">{{ item.name }}</a>
+                <div class="price">${{ item.price }}</div>
+                <form method="post" action="{% url 'add_to_cart' item.pk %}">
+                    {% csrf_token %}
+                    <button type="submit">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-  </body>
+</body>
+
 </html>
