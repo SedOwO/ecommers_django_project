@@ -13,6 +13,7 @@ class Item(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="items/")
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    price = models.FloatField(default=0.0)
 
     def __str__(self):
         return self.name
