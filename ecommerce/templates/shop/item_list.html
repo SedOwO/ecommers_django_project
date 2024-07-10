@@ -1,24 +1,111 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Items</title>
-</head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+      }
 
-<body>
-    <h1>Items</h1>
-    <form method="get">
-        <input type="text" name="q" placeholder="Search...">
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #6c757d;
+      }
+
+      form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        width: 300px;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #6c757d;
+        color: white;
+        border-radius: 5px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #5a6268;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .item {
+        background-color: #ffffff;
+        border: 1px solid #ced4da;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        transition: box-shadow 0.3s ease;
+      }
+
+      .item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .item a {
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      .item a:hover {
+        color: #5a6268;
+      }
+
+      .cart-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 18px;
+      }
+
+      .cart-link:hover {
+        color: #5a6268;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Items</h1>
+      <form method="get">
+        <input type="text" name="q" placeholder="Search..." />
         <button type="submit">Search</button>
-    </form>
-    <ul>
+      </form>
+      <div class="grid">
         {% for item in items %}
-        <li>
-            <a href="{% url 'item_detail' item.pk %}">{{ item.name }}</a>
-        </li>
+        <div class="item">
+          <a href="{% url 'item_detail' item.pk %}">{{ item.name }}</a>
+        </div>
         {% endfor %}
-    </ul>
-    <a href="{% url 'cart_detail' %}">Cart</a>
-</body>
-
+      </div>
+      <a class="cart-link" href="{% url 'cart_detail' %}">Cart</a>
+    </div>
+  </body>
 </html>
