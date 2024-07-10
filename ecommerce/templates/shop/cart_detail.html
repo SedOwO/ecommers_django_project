@@ -3,17 +3,100 @@
 
 <head>
     <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        .cart-item {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-item p {
+            margin: 0;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .item-price {
+            color: #3498db;
+        }
+
+        .item-quantity {
+            color: #3498db; /* Changed color for quantity */
+        }
+
+        .total-amount {
+            font-size: 20px;
+            color: #3498db;
+            margin: 20px 0;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 
 <body>
     <h1>Your Cart</h1>
-    <ul>
+    <div class="cart-items">
         {% for item in items %}
-        <li>{{ item.name }} - Quantity: {{ request.session.cart.item.id }}</li>
+        <div class="cart-item">
+            <p class="item-name">{{ item.name }}</p>
+            <p class="item-quantity">Quantity: {{ request.session.cart.item.id }}</p>
+            <p class="item-price">${{ item.price }}</p>
+        </div>
         {% endfor %}
-    </ul>
-    <p>Total Amount: {{ total_amount }}</p>
-    <a href="{% url 'checkout' %}">Checkout</a>
+    </div>
+    <p class="total-amount">Total Amount: ${{ total_amount }}</p>
+    <a href="{% url 'checkout' %}" class="button">Checkout</a>
     <br>
     <a href="{% url 'item_list' %}">Back to Items</a>
 </body>
