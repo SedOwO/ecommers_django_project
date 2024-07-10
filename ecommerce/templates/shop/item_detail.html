@@ -3,12 +3,79 @@
 
 <head>
     <title>{{ item.name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .description {
+            max-width: 600px;
+            text-align: justify;
+        }
+
+        .price {
+            font-size: 20px;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 10px 0;
+            display: inline-block;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
     <h1>{{ item.name }}</h1>
     <img src="{{ item.image.url }}" alt="{{ item.name }}">
-    <p>{{ item.description }}</p>
+    <p class="description">{{ item.description }}</p>
+    <p class="price">${{ item.price }}</p>
     <form method="post" action="{% url 'add_to_cart' item.pk %}">
         {% csrf_token %}
         <button type="submit">Add to Cart</button>
