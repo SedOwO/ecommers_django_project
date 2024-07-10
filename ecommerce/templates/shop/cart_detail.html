@@ -1,114 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Cart</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f9;
-        color: #333;
-        margin: 0;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
 
-      h1 {
-        color: #2c3e50;
-      }
+<head>
+  <title>Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-      .cart-item {
-        background-color: #fff;
-        margin: 10px 0;
-        padding: 15px;
-        border: 2px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 600px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
+    h1 {
+      color: #2c3e50;
+    }
 
-      .cart-item p {
-        margin: 0;
-      }
+    .cart-item {
+      background-color: #fff;
+      margin: 10px 0;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-      .item-name {
-        font-weight: bold;
-        color: #2c3e50;
-      }
+    .cart-item p {
+      margin: 0;
+    }
 
-      .item-price {
-        color: #3498db;
-      }
+    .item-name {
+      font-weight: bold;
+      color: #2c3e50;
+    }
 
-      .item-quantity {
-        color: #3498db;
-        /* Changed color for quantity */
-      }
+    .item-price {
+      color: #3498db;
+    }
 
-      .total-amount {
-        font-size: 20px;
-        color: #3498db;
-        margin: 20px 0;
-      }
+    .item-quantity {
+      color: #3498db;
+    }
 
-      a {
-        color: #3498db;
-        text-decoration: none;
-        margin: 10px 0;
-        display: inline-block;
-      }
+    .total-amount {
+      font-size: 20px;
+      color: #3498db;
+      margin: 20px 0;
+    }
 
-      a:hover {
-        text-decoration: underline;
-      }
+    a {
+      color: #3498db;
+      text-decoration: none;
+      margin: 10px 0;
+      display: inline-block;
+    }
 
-      .button {
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 5px;
-        text-align: center;
-      }
+    a:hover {
+      text-decoration: underline;
+    }
 
-      .button:hover {
-        background-color: #2980b9;
-      }
-    </style>
-  </head>
+    .button {
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-align: center;
+    }
 
-  <body>
-    <h1>Your Cart</h1>
-    <div>
-      {% for item, count in cart_items %}
-      <div class="cart-item">
-        <p class="item-name">{{ item.name }}</p>
-        <p class="item-quantity">Quantity: {{ count }}</p>
-        <p class="item-price">${{ item.price }}</p>
-        {% if count > 1 %}
-        <form action="{% url 'reduce_quantity' item.id %}" method="post">
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Your Cart</h1>
+  <div>
+    {% for item, count in cart_items %}
+    <div class="cart-item">
+      <p class="item-name">{{ item.name }}</p>
+      <p class="item-quantity">Quantity: {{ count }}</p>
+      <p class="item-price">${{ item.price }}</p>
+      <div>
+        <form action="{% url 'reduce_quantity' item.id %}" method="post" style="display: inline;">
           {% csrf_token %}
           <button type="submit" class="button">Reduce Quantity</button>
         </form>
-        {% else %}
-        <form action="{% url 'remove_item' item.id %}" method="post">
+        <form action="{% url 'remove_item' item.id %}" method="post" style="display: inline;">
           {% csrf_token %}
           <button type="submit" class="button">Remove Item</button>
         </form>
-        {% endif %}
       </div>
-      {% endfor %}
     </div>
-    <p class="total-amount">Total Amount: ${{ total_amount }}</p>
-    <a href="{% url 'checkout' %}" class="button">Checkout</a>
-    <br />
-    <a href="{% url 'item_list' %}">Back to Items</a>
-  </body>
+    {% endfor %}
+  </div>
+  <p class="total-amount">Total Amount: ${{ total_amount }}</p>
+  <a href="{% url 'checkout' %}" class="button">Checkout</a>
+  <br />
+  <a href="{% url 'item_list' %}">Back to Items</a>
+</body>
+
 </html>
