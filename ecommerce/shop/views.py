@@ -45,3 +45,22 @@ def add_to_cart(request, pk):
         cart[str(item.id)] = 1
     request.session["cart"] = cart
     return redirect("cart_detail")
+
+def reduce_quantity(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    
+    # Assuming you have a session-based cart management system
+    if item.id in request.session.get('cart', {}):
+        request.session['cart'][item.id] -= 1
+        if request.session['cart'][item.id] <= -1:
+            del request.session['cart'][item.id]
+    
+    return redirect('cart_detail')  
+def remove_item(request, item_id):
+    item = get_object_or_404(Item, id=item_id)
+    
+    # Assuming you have a session-based cart management system
+    if item.id in request.session and item_id in request.session['cart']:
+        del request.session['cart'][item.id]
+    
+    return redirect('cart_detail')  
