@@ -8,8 +8,8 @@
 <body>
     <h1>Your Cart</h1>
     <ul>
-        {% for item in items %}
-        <li>{{ item.name }} - Quantity: {{ request.session.cart.item.id }}</li>
+        {% for item, count in cart_items %}
+        <li>{{ item.name }} - Quantity: {{ count }}</li>
         {% endfor %}
     </ul>
     <p>Total Amount: {{ total_amount }}</p>

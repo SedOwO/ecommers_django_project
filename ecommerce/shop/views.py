@@ -17,14 +17,18 @@ def item_detail(request, pk):
     item = get_object_or_404(Item, pk=pk)
     return render(request, "shop/item_detail.html", {"item": item})
 
-
 def cart_detail(request):
     cart = request.session.get("cart", {})
     items = Item.objects.filter(id__in=cart.keys())
     total_amount = sum(item.price * cart[str(item.id)] for item in items)
+    
+    # Create a list of tuples (item, count)
+    cart_items = [(item, cart[str(item.id)]) for item in items]
+    
     return render(
-        request, "shop/cart_detail.html", {"items": items, "total_amount": total_amount}
+        request, "shop/cart_detail.html", {"cart_items": cart_items, "total_amount": total_amount}
     )
+
 
 
 def checkout(request):
