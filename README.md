@@ -108,10 +108,6 @@ This is a simple e-commerce application built with Django. It includes basic fea
 - `MEDIA_URL`: URL for media files.
 - `MEDIA_ROOT`: Root directory for media files.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - [Django Documentation](https://docs.djangoproject.com/en/3.2/)
