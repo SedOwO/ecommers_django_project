@@ -36,6 +36,7 @@ This is a simple e-commerce application built with Django. It includes basic fea
 4. **Run migrations**
 
     ```sh
+    python manage.py makemigrations
     python manage.py migrate
     ```
 
